@@ -4,7 +4,7 @@ from tkinter import messagebox
 
 root = Tk()
 root.geometry('800x600')
-root.config(bg='#f7b32b')
+root.config(bg='#00A676')
 
 # Frames for celsius to fahrenheit and vice versa
 c_f_frame = Frame(root, width=300, height=200, bg='#333')
@@ -28,6 +28,7 @@ f_c_entry.place(x=70, y=100)
 # Functionality for activating entry fields
 def c_f_activation():
     c_f_entry.config(state='normal')
+    c_f_entry.focus()
     f_c_entry.config(state='normal')
     f_c_entry.delete(0, END)
     f_c_entry.config(state='readonly')
@@ -35,6 +36,7 @@ def c_f_activation():
 
 def f_c_activation():
     f_c_entry.config(state='normal')
+    f_c_entry.focus()
     c_f_entry.config(state='normal')
     c_f_entry.delete(0, END)
     c_f_entry.config(state='readonly')
@@ -50,27 +52,23 @@ f_c_activate.place(x=455, y=270)
 # Temperature conversion function
 def conversion():
     try:
-        # If entry fields are empty, raise ValueError
-        if f_c_entry.get() == '' or c_f_entry.get == '':
-            raise ValueError
-
         # Clears result label
         calc_label.config(text='')
         # Celsius to Fahrenheit
         if c_f_entry['state'] == 'normal':
             c_temp = float(c_f_entry.get())
             f_result = round((c_temp * (9/5)) + 32, 1)
-            calc_label.config(text=str(f_result))
+            calc_label.config(text=f_result)
 
         # Fahrenheit to Celsius
         elif f_c_entry['state'] == 'normal':
             f_temp = float(f_c_entry.get())
             c_result = round((f_temp-32)*(5/9), 1)
-            calc_label.config(text=str(c_result))
+            calc_label.config(text=c_result)
 
     # raise value error if invalid entry given
     except ValueError:
-        messagebox.showinfo(message='Invalid entry')
+        messagebox.showerror(message='Invalid entry')
 
 
 # Convert button and label for result
@@ -98,4 +96,5 @@ clear.place(x=550, y=500)
 # Exit button with inbuilt function
 escape = Button(root, text='Exit', command='exit')
 escape.place(x=650, y=500)
+
 root.mainloop()
